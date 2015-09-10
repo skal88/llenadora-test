@@ -1,0 +1,97 @@
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		html, body{
+			padding: 0; border: 0; margin: 0;
+		}
+		#formBox{
+			width: 250px;
+			position: fixed;
+			right: 0px;
+			bottom: 0px;
+		}
+		#pr{
+			width: 10px;
+		    height: 10px;
+		    background-color: black;
+		    position: fixed;
+		    left: 0px;
+		    top: 0px;
+		}
+	</style>
+</head>
+<body>
+	<div id="formBox">
+		Distancia inicial X (par): <input type="text" value="20" id ="offsetIniXp"><br>
+		Distancia inicial X (inp): <input type="text" value="30" id ="offsetIniXi"><br>
+		Distancia inicial Y : <input type="text" value="20" id ="offsetIniY"><br>
+
+		Distancia final X (par): <input type="text" value="220" id ="lastXp"><br>
+		Distancia final X (inp): <input type="text" value="210" id ="lastXi"><br>
+		Distancia final Y : <input type="text" value="220" id ="lastY"><br>
+
+		Cantidad botellas X (par): <input type="text" value="10" id ="cantBotellasP"><br>
+		Cantidad botellas X (inp): <input type="text" value="9" id ="cantBotellasI"><br>
+		Cantidad botellas Y : <input type="text" value="10" id ="cantBotellasF"><br>
+
+
+		Multiplicador: <input type="text" value="0" id ="zoom"><br>
+		<div style="text-align: center">
+			<input type="button" value="Iniciar" id="startMach">
+			<input type="button" value="Siguiente" id="next">
+		</div>
+
+	</div>
+	<div id="pr"></div>
+	<script type="text/javascript" src="llenadora.js"></script>
+	<script type="text/javascript">
+		
+		var llenadora1 = new Llenadora();
+
+		setInterval(function(){
+			llenadora1.move();
+			actualizar();
+		}, 3);
+
+
+		var elemento = document.getElementById("pr");
+
+		function actualizar(){
+			elemento.style.left = llenadora1.motorX.posAct;
+			elemento.style.top  = llenadora1.motorY.posAct;
+		}
+
+		function startMach(){
+			var zoom = document.getElementById("zoom").value;
+
+			var offsetIniXp = document.getElementById("offsetIniXp").value;
+			var offsetIniXi = 
+			// Configuramos la maquina
+			llenadora1.offsetIniXp = document.getElementById("offsetIniXp").value * zoom;
+			llenadora1.offsetIniXi = document.getElementById("offsetIniXi").value * zoom;
+			llenadora1.offsetIniY  = document.getElementById("offsetIniY").value * zoom;
+
+			llenadora1.lastXp = document.getElementById("lastXp").value * zoom;
+			llenadora1.lastXi = document.getElementById("lastXi").value * zoom;
+			llenadora1.lastY  = document.getElementById("lastY").value * zoom;
+
+			llenadora1.cantBotellasP = document.getElementById("cantBotellasP").value;
+			llenadora1.cantBotellasI = document.getElementById("cantBotellasI").value;
+			llenadora1.cantBotellasF = document.getElementById("cantBotellasF").value;
+
+			llenadora1.configStatus = 2;
+			llenadora1.init();
+		}
+
+		document.getElementById("startMach").addEventListener("click", function(e){
+			startMach();
+		}, false);
+
+		document.getElementById("next").addEventListener("click", function(){
+			llenadora1.nextStep();
+		}, false);
+		
+	</script>
+</body>
+</html>
