@@ -36,7 +36,7 @@
 		Cantidad botellas Y : <input type="text" value="10" id ="cantBotellasF"><br>
 
 
-		Multiplicador: <input type="text" value="0" id ="zoom"><br>
+		Multiplicador: <input type="number" min="1" value="1" id ="zoom"><br>
 		<div style="text-align: center">
 			<input type="button" value="Iniciar" id="startMach">
 			<input type="button" value="Siguiente" id="next">
@@ -45,6 +45,7 @@
 	</div>
 	<div id="pr"></div>
 	<script type="text/javascript" src="llenadora.js"></script>
+	<script type="text/javascript" src="motor.js"></script>
 	<script type="text/javascript">
 		
 		var llenadora1 = new Llenadora();
@@ -52,7 +53,7 @@
 		setInterval(function(){
 			llenadora1.move();
 			actualizar();
-		}, 3);
+		}, 15);
 
 
 		var elemento = document.getElementById("pr");
@@ -91,6 +92,7 @@
 		document.getElementById("next").addEventListener("click", function(){
 			llenadora1.nextStep();
 		}, false);
+
 		
 	</script>
 </body>
