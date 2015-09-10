@@ -71,6 +71,19 @@ Llenadora.prototype.move = function(){
 		var newPos = this.stepsLog[this.actualStep];
 		this.moveTo( newPos.x, newPos.y ); // Vamos a la posicion de inicio
 	}
+	if(this.isMoving()){
+		if(this.moving && typeof this.moving === "function") this.moving();
+	} else{
+		if(this.stopped && typeof this.stopped === "function") this.stopped();
+	}
+}
+
+Llenadora.prototype.isMoving = function(){
+	if(this.motorX.posAct != this.motorX.posDes || this.motorY.posAct != this.motorY.posDes){
+		return true;
+	} else{
+		return false;
+	}
 }
 
 Llenadora.prototype.moveTo = function( x, y){
@@ -81,7 +94,6 @@ Llenadora.prototype.moveTo = function( x, y){
 Llenadora.prototype.nextStep = function(){
 	if( this.actualStep >= 0 && this.actualStep < this.stepsLog.length -1 ){
 		this.actualStep++;
-		console.log(this.actualStep);
 	} else{
 		this.actualStep = 0;
 	}
